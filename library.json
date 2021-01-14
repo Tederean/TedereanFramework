@@ -1,0 +1,36 @@
+{
+  "name":"TedereanFramework",
+  "description":"Extensive library for various MCU architectures.",
+  "keywords":"wifi,ota,time,events",
+  "authors":
+  {
+    "name": "Tederean",
+    "maintainer": true
+  },
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/Tederean/TedereanFramework.git"
+  },
+  "version": "1.0.0",
+  "license": "LGPL-2.1",
+  "frameworks": "arduino",
+  "platforms": ["espressif8266", "espressif32", "atmelavr", "atmelsam"],
+  "dependencies": [
+    {
+      "owner": "m5ez",
+      "name": "ezTime",
+      "platforms": [ "espressif8266", "espressif32" ]
+    },
+    {
+      "owner": "hideakitai",
+      "name": "ArxSmartPtr",
+      "platforms": [ "atmelavr", "atmelsam" ]
+    },
+    {
+      "owner": "mike-matera",
+      "name": "ArduinoSTL",
+      "platforms": [ "atmelavr", "atmelsam" ]
+    }
+  ]
+}
