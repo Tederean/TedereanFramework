@@ -34,7 +34,11 @@ namespace Services
 
     void Initialize();
 
+#ifdef ESP32
+    IRAM_ATTR timespan_t GetUptime_us();
+#else
     timespan_t GetUptime_us();
+#endif
 
     void InvokeLater(Event<void> *event, timespan_t delay_us, bool repeating);
 
