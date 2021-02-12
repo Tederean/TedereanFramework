@@ -24,7 +24,7 @@ typedef struct
   Event<void> *TargetEvent;
   timespan_t LastExecution_us;
   timespan_t Interval_us;
-  bool Repeat;
+  TimerMode Mode;
 } ScheduledEvent;
 
 namespace Services
