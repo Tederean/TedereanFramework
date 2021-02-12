@@ -26,6 +26,13 @@ typedef uint64_t timespan_t;
 typedef uint32_t timespan_t;
 #endif
 
+enum class TimerMode
+{
+  Single,
+  RepeatingSync,
+  RepeatingAsync,
+};
+
 
 namespace Services
 {
@@ -40,7 +47,7 @@ namespace Services
     timespan_t GetUptime_us();
 #endif
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, bool repeating);
+    void InvokeLater(Event<void> *event, timespan_t delay_us, TimerMode timerMode);
 
     void InvokeCancel(Event<void> *event);
 
