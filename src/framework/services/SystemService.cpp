@@ -36,7 +36,7 @@ namespace Services
 
     timespan_t GetUptime_us();
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, bool repeating);
+    void InvokeLater(Event<void> *event, timespan_t delay_us, TimerMode timerMode);
 
     void InvokeCancel(Event<void> *event);
 
@@ -74,7 +74,7 @@ namespace Services
 #endif
     }
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, bool repeating)
+    void InvokeLater(Event<void> *event, timespan_t delay_us, TimerMode timerMode)
     {
       int16_t index = FindEventIndex(event);
 
@@ -85,7 +85,7 @@ namespace Services
         scheduledEvent->TargetEvent = event;
         scheduledEvent->LastExecution_us = GetUptime_us();
         scheduledEvent->Interval_us = delay_us;
-        scheduledEvent->Repeat = repeating;
+        scheduledEvent->Mode = timerMode;
 
         if (ScheduledTargets.empty())
         {
@@ -142,13 +142,18 @@ namespace Services
         {
           scheduledEvent->TargetEvent->Invoke(nullptr);
 
-          if (scheduledEvent->Repeat)
+          
+          if (scheduledEvent->Mode == TimerMode::Single)
+          {
+            TargetsToRemove.push_back(scheduledEvent->TargetEvent);
+          }
+          else if (scheduledEvent->Mode == TimerMode::RepeatingSync)
           {
             scheduledEvent->LastExecution_us = scheduledEvent->LastExecution_us + scheduledEvent->Interval_us;
           }
-          else
+          else if (scheduledEvent->Mode == TimerMode::RepeatingAsync)
           {
-            TargetsToRemove.push_back(scheduledEvent->TargetEvent);
+            scheduledEvent->LastExecution_us = GetUptime_us();
           }
         }
       }
