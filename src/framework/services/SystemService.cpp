@@ -1,7 +1,14 @@
 #include <Arduino.h>
+
+#if defined(__SAM3X8E__) || defined(__SAMD21G18A__)
+#undef min
+#undef max
+#include <algorithm>
+#endif
+
 #include <vector>
 
-#if !defined(ESP8266) && !defined(ESP32)
+#if defined(__AVR__)
 #include <ArxSmartPtr.h>
 #else
 #include <memory>
