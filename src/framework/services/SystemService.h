@@ -7,14 +7,10 @@
 using namespace std;
 
 #ifdef SERIAL_DEBUG
-#define Debug(x) Serial.print(x)
+#define Debug(x) SERIAL_DEBUG_PORT.print(x)
+#define DebugFlush(x) SERIAL_DEBUG_PORT.flush()
 #else
 #define Debug(x)
-#endif
-
-#ifdef SERIAL_DEBUG
-#define DebugFlush(x) Serial.flush()
-#else
 #define DebugFlush(x)
 #endif
 
