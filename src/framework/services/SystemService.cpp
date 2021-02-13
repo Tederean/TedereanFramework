@@ -55,10 +55,10 @@ namespace Services
     void Initialize()
     {
 #ifdef SERIAL_DEBUG
-      Serial.begin(115200UL);
+      SERIAL_DEBUG_PORT.begin(SERIAL_DEBUG_SPEED);
 
 #if defined(ESP8266) || defined(ESP32)
-      Serial.setDebugOutput(true);
+      SERIAL_DEBUG_PORT.setDebugOutput(true);
 #endif
 #endif
     }
