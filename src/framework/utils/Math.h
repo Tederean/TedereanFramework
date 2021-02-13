@@ -9,22 +9,6 @@ namespace Math
 {
 
   template <typename T>
-  T Min(T a, T b)
-  {
-    if (a < b) return a;
-
-    return b;
-  }
-
-  template <typename T>
-  T Max(T a, T b)
-  {
-    if (a > b) return a;
-
-    return b;
-  }
-  
-  template <typename T>
   T Clamp(T value, T min, T max)
   {
     if (value > max)
