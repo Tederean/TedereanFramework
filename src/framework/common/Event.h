@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 
-#if defined(__SAM3X8E__) || defined(__SAMD21G18A__)
+#if defined(__SAM3X8E__) || defined(__SAMD21G18A__) || defined(ARDUINO_ARCH_RP2040)
 #undef min
 #undef max
 #include <algorithm>
