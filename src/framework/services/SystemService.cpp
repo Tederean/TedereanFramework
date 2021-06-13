@@ -24,7 +24,7 @@ typedef struct
   Event<void> *TargetEvent;
   timespan_t LastExecution_us;
   timespan_t Interval_us;
-  TimerMode Mode;
+  SchedulingBehaviour Mode;
 } ScheduledEvent;
 
 namespace Services
@@ -36,7 +36,7 @@ namespace Services
 
     timespan_t GetUptime_us();
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, TimerMode timerMode);
+    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour timerMode);
 
     void InvokeCancel(Event<void> *event);
 
@@ -74,7 +74,7 @@ namespace Services
 #endif
     }
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, TimerMode timerMode)
+    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour timerMode)
     {
       int16_t index = FindEventIndex(event);
 
@@ -143,15 +143,28 @@ namespace Services
           scheduledEvent->TargetEvent->Invoke(nullptr);
 
           
-          if (scheduledEvent->Mode == TimerMode::Single)
+          if (scheduledEvent->Mode == SchedulingBehaviour::OneShot)
           {
             TargetsToRemove.push_back(scheduledEvent->TargetEvent);
           }
-          else if (scheduledEvent->Mode == TimerMode::RepeatingSync)
+
+          else if (scheduledEvent->Mode == SchedulingBehaviour::FixedPeriod)
           {
             scheduledEvent->LastExecution_us = scheduledEvent->LastExecution_us + scheduledEvent->Interval_us;
           }
-          else if (scheduledEvent->Mode == TimerMode::RepeatingAsync)
+
+          else if (scheduledEvent->Mode == SchedulingBehaviour::FixedPeriodSkipTicks)
+          {
+            timespan_t uptime = GetUptime_us();
+
+            do
+            {
+              scheduledEvent->LastExecution_us = scheduledEvent->LastExecution_us + scheduledEvent->Interval_us;
+            }
+            while (scheduledEvent->LastExecution_us <= uptime);
+          }
+
+          else if (scheduledEvent->Mode == SchedulingBehaviour::FixedPause)
           {
             scheduledEvent->LastExecution_us = GetUptime_us();
           }
