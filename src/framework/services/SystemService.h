@@ -44,7 +44,7 @@ namespace Services
     timespan_t GetUptime_us();
 #endif
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, TimerMode timerMode);
+    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour schedulingBehaviour);
 
     void InvokeCancel(Event<void> *event);
 
