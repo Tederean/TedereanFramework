@@ -36,7 +36,7 @@ namespace Services
 
     timespan_t GetUptime_us();
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour timerMode);
+    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour schedulingBehaviour);
 
     void InvokeCancel(Event<void> *event);
 
@@ -74,7 +74,7 @@ namespace Services
 #endif
     }
 
-    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour timerMode)
+    void InvokeLater(Event<void> *event, timespan_t delay_us, SchedulingBehaviour schedulingBehaviour)
     {
       int16_t index = FindEventIndex(event);
 
@@ -85,7 +85,7 @@ namespace Services
         scheduledEvent->TargetEvent = event;
         scheduledEvent->LastExecution_us = GetUptime_us();
         scheduledEvent->Interval_us = delay_us;
-        scheduledEvent->Mode = timerMode;
+        scheduledEvent->Mode = schedulingBehaviour;
 
         if (ScheduledTargets.empty())
         {
