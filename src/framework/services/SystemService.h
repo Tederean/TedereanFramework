@@ -22,11 +22,12 @@ typedef uint64_t timespan_t;
 typedef uint32_t timespan_t;
 #endif
 
-enum class TimerMode
+enum class SchedulingBehaviour
 {
-  Single,
-  RepeatingSync,
-  RepeatingAsync,
+  OneShot,
+  FixedPeriod,
+  FixedPeriodSkipTicks,
+  FixedPause,
 };
 
 
