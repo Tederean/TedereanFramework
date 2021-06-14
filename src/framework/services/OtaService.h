@@ -2,6 +2,7 @@
 #define _OtaService_
 
 #include <Arduino.h>
+#include <string>
 #include <framework/common/Event.h>
 
 using namespace std;
